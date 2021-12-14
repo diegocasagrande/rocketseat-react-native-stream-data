@@ -98,6 +98,14 @@ export function Home() {
     getUserFollowedStreams();
   }, [])
 
+async function handleSignOut() {
+  try {
+    await signOut();
+  } catch (error) {
+    Alert.alert('Erro SignOut', 'Ocorreu um erro ao tentar se deslogar do app');
+  }
+}
+
   return (
     <Container
       from={{
@@ -121,11 +129,14 @@ export function Home() {
           <UserInfoText style={{ fontFamily: theme.fonts.bold }}>{user.display_name}</UserInfoText>
         </UserInfo>
 
-        {/* <SignOutButton onPress={}>
-          Verify if isLoggingOut is true
-          If it is, show an ActivityIndicator
-          Otherwise, show Feather's power icon
-        </SignOutButton> */}
+        <SignOutButton onPress={handleSignOut}>
+          {
+            isLoggingOut ?
+              <ActivityIndicator size={25} color={theme.colors.white} />
+            :
+              <Feather name="power" size={24} color={theme.colors.white} />
+          }
+        </SignOutButton>
       </Header>
 
       <UserFollowedStreams>
